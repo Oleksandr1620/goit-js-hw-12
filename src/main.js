@@ -1,8 +1,7 @@
-// main.js
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-import { getImagesByQuery, PER_PAGE } from './js/pixabay-api.js';
+import { getImagesByQuery } from './js/pixabay-api.js';
 import {
   createGallery,
   clearGallery,
@@ -84,8 +83,6 @@ refs.form.addEventListener('submit', async event => {
       message: 'Something went wrong. Please try again later.',
       position: 'topRight',
     });
-    // Для дебагу локально можна тимчасово вивести error в консоль
-    // console.error(error);
   }
 });
 
@@ -110,7 +107,6 @@ refs.loadMoreBtn.addEventListener('click', async () => {
 
     loadedImages += data.hits.length;
 
-    // Плавна прокрутка після додавання нових карток
     const firstCard = document.querySelector('.gallery-item');
     if (firstCard) {
       const cardHeight = firstCard.getBoundingClientRect().height;
@@ -120,7 +116,6 @@ refs.loadMoreBtn.addEventListener('click', async () => {
       });
     }
 
-    // Кінець колекції
     if (loadedImages >= totalHits) {
       hideLoadMoreButton();
       iziToast.info({
@@ -136,6 +131,5 @@ refs.loadMoreBtn.addEventListener('click', async () => {
       message: 'Unable to load more images.',
       position: 'topRight',
     });
-    // console.error(error);
   }
 });

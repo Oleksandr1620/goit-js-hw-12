@@ -1,4 +1,3 @@
-// js/render-functions.js
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
@@ -6,7 +5,6 @@ const galleryContainer = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
 const loadMoreBtn = document.querySelector('.btn');
 
-// Ініціалізуємо SimpleLightbox для делегування (він працює з .gallery a)
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
@@ -39,10 +37,8 @@ export function createGallery(images) {
     )
     .join('');
 
-  // Додаємо всі нові елементи в DOM однією операцією
   galleryContainer.insertAdjacentHTML('beforeend', markup);
 
-  // Оновлюємо simplelightbox (щоб він бачив нові посилання)
   lightbox.refresh();
 }
 

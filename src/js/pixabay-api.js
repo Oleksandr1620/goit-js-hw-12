@@ -1,4 +1,3 @@
-// js/pixabay-api.js
 import axios from 'axios';
 
 const API_KEY = '53389893-16eb2ee6e433eb21b924fd0ec';
@@ -18,5 +17,5 @@ export async function getImagesByQuery(query, page = 1) {
   };
 
   const response = await axios.get(BASE_URL, { params });
-  return response.data; // повертаємо data (з hits, totalHits і т.д.)
+  return response.data;
 }
