@@ -57,20 +57,16 @@ body {
   background: #6c8cff;
 }
 
+/* LOADER (під кнопкою) */
 .loader {
   display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
+  margin: 16px auto 0; /* відступ зверху, центрування */
   border: 4px solid rgba(0, 0, 0, 0.1);
   border-top: 4px solid #3498db;
   border-radius: 50%;
-  box-sizing: border-box;
   animation: spin 0.8s linear infinite;
-  z-index: 1000;
 }
 
 .loader.is-active {
@@ -79,10 +75,10 @@ body {
 
 @keyframes spin {
   0% {
-    transform: translate(-50%, -50%) rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    transform: translate(-50%, -50%) rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 

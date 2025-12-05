@@ -2,7 +2,7 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-import { getImagesByQuery } from './js/pixabay-api.js';
+import { getImagesByQuery, PER_PAGE } from './js/pixabay-api.js';
 import {
   createGallery,
   clearGallery,
@@ -20,7 +20,6 @@ const refs = {
 };
 
 let page = 1;
-let per_page = 15;
 let currentQuery = '';
 let loadedImages = 0;
 let totalHits = 0;
@@ -55,7 +54,7 @@ refs.form.addEventListener('submit', async event => {
     const data = await getImagesByQuery(query, page);
     hideLoader();
 
-    if (data.hits.length === 0) {
+    if (!data.hits || data.hits.length === 0) {
       iziToast.info({
         message:
           'Sorry, there are no images matching your search query. Please try again!',
@@ -64,7 +63,7 @@ refs.form.addEventListener('submit', async event => {
       return;
     }
 
-    totalHits = data.totalHits;
+    totalHits = data.totalHits ?? 0;
     loadedImages = data.hits.length;
 
     createGallery(data.hits);
@@ -72,6 +71,7 @@ refs.form.addEventListener('submit', async event => {
     if (loadedImages < totalHits) {
       showLoadMoreButton();
     } else {
+      hideLoadMoreButton();
       iziToast.info({
         message: "We're sorry, but you've reached the end of search results.",
         position: 'topRight',
@@ -84,6 +84,8 @@ refs.form.addEventListener('submit', async event => {
       message: 'Something went wrong. Please try again later.',
       position: 'topRight',
     });
+    // Для дебагу локально можна тимчасово вивести error в консоль
+    // console.error(error);
   }
 });
 
@@ -94,6 +96,15 @@ refs.loadMoreBtn.addEventListener('click', async () => {
   try {
     const data = await getImagesByQuery(currentQuery, page);
     hideLoader();
+
+    if (!data.hits || data.hits.length === 0) {
+      hideLoadMoreButton();
+      iziToast.info({
+        message: "We're sorry, but you've reached the end of search results.",
+        position: 'topRight',
+      });
+      return;
+    }
 
     createGallery(data.hits);
 
@@ -125,5 +136,6 @@ refs.loadMoreBtn.addEventListener('click', async () => {
       message: 'Unable to load more images.',
       position: 'topRight',
     });
+    // console.error(error);
   }
 });
